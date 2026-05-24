@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS credit_payments (
   credit_id   INT UNSIGNED NOT NULL,
   amount      DECIMAL(14,2) NOT NULL,
   payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  notes       TEXT,
+  notes       TEXT
 );
 
 -- ── EXPENSES (Gastos) ───────────────────────────────────────────────────────

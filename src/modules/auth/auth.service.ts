@@ -7,7 +7,7 @@ export const login = async (email: string, password: string) => {
   const users = rows as any[]
   if (!users.length) throw new Error('Invalid credentials')
   const user = users[0]
-  if (!user.active) throw new Error('Tu cuenta ha sido desactivada. Contacta al administrador.')
+  if (user.status === 'inactive') throw new Error('Tu cuenta ha sido desactivada. Contacta al administrador.')
   const valid = await bcrypt.compare(password, user.password)
   if (!valid) throw new Error('Credenciales inválidas')
   const token = jwt.sign(
