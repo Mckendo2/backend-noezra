@@ -7,7 +7,7 @@ const router = Router()
 
 const loginLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hora
-  max: 10, // Límite de 10 intentos por IP
+  max: 1000, // Límite de 1000 intentos por IP temporalmente
   message: { success: false, message: 'Demasiados intentos de inicio de sesión desde esta IP, por favor intenta nuevamente después de una hora.' },
 })
 
