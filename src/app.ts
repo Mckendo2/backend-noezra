@@ -29,7 +29,7 @@ import { notFound } from './middlewares/notFound'
 dotenv.config()
 
 const app = express()
-
+app.set('trust proxy', 1) // Confiar en el proxy de Hostinger para express-rate-limit
 // ── Core Middleware ───────────────────────────────────────────────────────────
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" } // Permite cargar imágenes del servidor desde el frontend
