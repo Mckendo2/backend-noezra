@@ -21,6 +21,7 @@ export const errorHandler = (
     }
   }
 
+  // Always return the real error message to help debug in production temporarily
   res.status(statusCode).json({
     success: false,
     message,
