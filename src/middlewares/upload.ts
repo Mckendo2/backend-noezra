@@ -18,23 +18,25 @@ const storage = new CloudinaryStorage({
   params: async (_req, _file) => {
     return {
       folder: 'noezra-pos/products',
-      allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+      allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'heic', 'heif'],
       public_id: 'product-' + Date.now() + '-' + Math.round(Math.random() * 1e9)
     }
   }
 })
 
 const fileFilter = (_req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp']
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif']
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true)
   } else {
-    cb(new Error('Formato de imagen inválido. Solo JPG, PNG y WEBP.'))
+    const error: any = new Error('Formato de imagen inválido. Solo JPG, PNG, WEBP y HEIC.')
+    error.statusCode = 400
+    cb(error)
   }
 }
 
 export const uploadProductImage = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB limit
   fileFilter
 })
