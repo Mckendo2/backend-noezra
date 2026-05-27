@@ -6,12 +6,12 @@ export interface AppError extends Error {
 }
 
 export const errorHandler = (
-  err: AppError | multer.MulterError,
+  err: any,
   _req: Request,
   res: Response,
   _next: NextFunction
 ) => {
-  let statusCode = (err as AppError).statusCode || 500
+  let statusCode = err.statusCode || 500
   let message = err.message || 'Internal Server Error'
 
   if (err instanceof multer.MulterError) {
@@ -21,10 +21,19 @@ export const errorHandler = (
     }
   }
 
-  // Always return the real error message to help debug in production temporarily
+  // FORCE VERBOSE LOGGING
+  let verboseMessage = message;
+  if (message === 'Internal Server Error') {
+    try {
+      verboseMessage = JSON.stringify(err, Object.getOwnPropertyNames(err));
+    } catch(e) {
+      verboseMessage = String(err);
+    }
+  }
+
   res.status(statusCode).json({
     success: false,
-    message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
+    message: verboseMessage,
+    errorObj: err
   })
 }
