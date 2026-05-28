@@ -58,7 +58,7 @@ export const getById = async (id: number) => {
 /* ── create ─────────────────────────────────────────────────────────────── */
 export const create = async (data: {
   user_id: number
-  customer_id: number
+  customer_id: number | null
   discount?: number
   valid_until: string
   notes?: string
@@ -100,7 +100,7 @@ export const create = async (data: {
 
 /* ── update (solo pendientes) ──────────────────────────────────────────── */
 export const update = async (id: number, data: {
-  customer_id?: number
+  customer_id?: number | null
   discount?: number
   valid_until?: string
   notes?: string
