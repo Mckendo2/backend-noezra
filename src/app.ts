@@ -42,7 +42,13 @@ const globalLimiter = rateLimit({
 })
 app.use('/api', globalLimiter)
 
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173', credentials: true }))
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://importacionesnoezra.com',
+  process.env.FRONTEND_URL
+].filter(Boolean) as string[];
+
+app.use(cors({ origin: allowedOrigins, credentials: true }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
